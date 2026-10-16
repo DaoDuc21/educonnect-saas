@@ -99,6 +99,7 @@ export function OnlineClassModal({
     showToast(handRaised ? 'Đã hạ tay xuống' : 'Đã giơ tay xin phát biểu!', 'info');
   };
 
+  return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/85 backdrop-blur-md animate-in fade-in">
       <div
         className="bg-slate-950 text-white w-full max-w-5xl h-full sm:h-[90vh] sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col border border-slate-800"
@@ -127,7 +128,7 @@ export function OnlineClassModal({
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => showToast('Đang kết nối vào phòng học Google Meet của lớp!', 'success')}
-              className="px-2.5 sm:px-3.5 py-1.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] sm:text-xs font-bold shadow-md flex items-center gap-1 transition-all group shrink-0 ring-1 ring-emerald-400/40"
+              className="px-2.5 sm:px-3.5 py-1.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] sm:text-xs font-bold shadow-md flex items-center gap-1 transition-all group"
               title="Mở phòng Google Meet liên kết với lớp học"
             >
               <VideoIcon className="w-3.5 h-3.5 text-amber-300" />
@@ -226,7 +227,7 @@ export function OnlineClassModal({
               {activeView === 'whiteboard' && (
                 <div className="text-center p-6 space-y-4 max-w-lg w-full">
                   {/* Google Meet Quick Connect Banner */}
-                  <div className="p-3.5 rounded-2xl bg-gradient-to-r from-emerald-950/90 via-slate-950 to-indigo-950 border border-emerald-500/40 shadow-xl flex items-center justify-between gap-3 text-left">
+                  <div className="p-3.5 rounded-2xl bg-gradient-to-r from-emerald-950/90 via-slate-950 to-indigo-950 border border-emerald-500/40 shadow-xl flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2.5 min-w-0">
                       <div className="w-9 h-9 rounded-xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-400 shrink-0">
                         <VideoIcon className="w-4 h-4 text-emerald-300" />
@@ -247,7 +248,7 @@ export function OnlineClassModal({
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => showToast('Đang chuyển hướng sang Google Meet...', 'success')}
-                      className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-xs shadow-md flex items-center gap-1.5 transition-all active:scale-95 shrink-0"
+                      className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-xs shadow-md flex items-center gap-2"
                     >
                       <span>Vào Meet</span>
                       <ExternalLink className="w-3 h-3" />
