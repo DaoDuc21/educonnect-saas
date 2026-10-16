@@ -118,6 +118,7 @@ export default function AppHome() {
   const [onlineClassEvent, setOnlineClassEvent] = useState<ScheduleEvent | null>(null);
   const [isCreateHomeworkOpen, setIsCreateHomeworkOpen] = useState(false);
   const [isProvisionModalOpen, setIsProvisionModalOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Parent Child selection state
   const [selectedChildId, setSelectedChildId] = useState<string>('stu-2'); // Bé An default
@@ -1281,7 +1282,7 @@ export default function AppHome() {
 
   return (
     <div className="flex min-h-screen bg-[#F5F3EF] overflow-x-hidden">
-      {/* Fixed Left Sidebar */}
+      {/* Fixed Left Sidebar / Mobile Drawer */}
       <Sidebar
         currentRole={currentRole}
         onRoleChange={handleRoleChange}
@@ -1290,6 +1291,8 @@ export default function AppHome() {
         currentAdminRole={currentAdminRole}
         currentUser={currentUser}
         onLogout={handleLogout}
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
       />
 
       {/* Main Content Area */}
@@ -1315,6 +1318,7 @@ export default function AppHome() {
           conversations={conversations}
           chatMessages={chatMessages}
           onSendMessage={handleSendMessage}
+          onToggleMobileMenu={() => setIsMobileMenuOpen((prev) => !prev)}
         />
 
         {/* Dynamic Viewport */}

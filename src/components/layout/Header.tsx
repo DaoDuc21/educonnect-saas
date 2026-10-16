@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Search, MessageSquare, Plus, ChevronRight, LogOut } from 'lucide-react';
+import { Search, MessageSquare, Plus, ChevronRight, LogOut, Menu } from 'lucide-react';
 import { UserRole, AdminRole, AuthUser, AppNotification, Conversation, ChatMessage } from '@/types';
 import { useToast } from '../shared/ToastNotification';
 import { NotificationPopover } from '../notifications/NotificationPopover';
@@ -26,6 +26,7 @@ interface HeaderProps {
   conversations?: Conversation[];
   chatMessages?: ChatMessage[];
   onSendMessage?: (conversationId: string, content: string) => void;
+  onToggleMobileMenu?: () => void;
 }
 
 export function Header({
@@ -45,6 +46,7 @@ export function Header({
   conversations = [],
   chatMessages = [],
   onSendMessage = () => {},
+  onToggleMobileMenu,
 }: HeaderProps) {
   const { showToast } = useToast();
   const [searchQuery, setSearchQuery] = useState('');
@@ -105,17 +107,27 @@ export function Header({
   };
 
   return (
-    <header className="h-16 px-8 bg-transparent flex items-center justify-between border-b border-slate-200/50 relative z-30">
-      {/* Breadcrumb Navigation */}
-      <div className="flex items-center gap-2 text-sm">
-        <span className="font-semibold text-slate-400 hover:text-slate-600 cursor-pointer">
+    <header className="h-16 px-4 md:px-8 bg-white/70 backdrop-blur-md md:bg-transparent flex items-center justify-between border-b border-slate-200/50 relative z-30 sticky top-0 md:static">
+      {/* Mobile Menu Button + Breadcrumb */}
+      <div className="flex items-center gap-2 text-sm min-w-0">
+        {onToggleMobileMenu && (
+          <button
+            type="button"
+            onClick={onToggleMobileMenu}
+            className="md:hidden p-2 -ml-1 rounded-xl text-slate-700 hover:bg-slate-100 transition-colors"
+            aria-label="Mở menu"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
+        )}
+        <span className="font-semibold text-slate-400 hover:text-slate-600 cursor-pointer hidden sm:inline">
           {breadcrumb.root}
         </span>
-        <ChevronRight className="w-3.5 h-3.5 text-slate-300" />
-        <span className="font-medium text-slate-500 flex items-center gap-1.5">
-          <span>{breadcrumb.role}</span>
+        <ChevronRight className="w-3.5 h-3.5 text-slate-300 hidden sm:inline" />
+        <span className="font-medium text-slate-500 flex items-center gap-1.5 truncate">
+          <span className="hidden sm:inline">{breadcrumb.role}</span>
           {currentRole === 'admin' && (
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200">
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200 hidden sm:inline">
               {currentAdminRole === 'super_admin'
                 ? 'Chủ Trung Tâm'
                 : currentAdminRole === 'academic_coordinator'
@@ -124,8 +136,8 @@ export function Header({
             </span>
           )}
         </span>
-        <ChevronRight className="w-3.5 h-3.5 text-slate-300" />
-        <span className="font-bold text-slate-800">
+        <ChevronRight className="w-3.5 h-3.5 text-slate-300 hidden sm:inline" />
+        <span className="font-bold text-slate-800 truncate">
           {breadcrumb.page}
         </span>
       </div>

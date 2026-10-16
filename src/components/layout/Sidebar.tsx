@@ -24,7 +24,8 @@ import {
   BookOpen,
   BarChart3,
   FolderOpen,
-  MessageSquare
+  MessageSquare,
+  X,
 } from 'lucide-react';
 import { UserRole, AdminRole, AuthUser } from '@/types';
 import { cn } from '@/lib/utils';
@@ -37,6 +38,8 @@ interface SidebarProps {
   currentAdminRole?: AdminRole;
   currentUser?: AuthUser | null;
   onLogout?: () => void;
+  isOpen?: boolean;
+  onClose?: () => void;
 }
 
 export function Sidebar({
@@ -47,6 +50,8 @@ export function Sidebar({
   currentAdminRole = 'super_admin',
   currentUser,
   onLogout,
+  isOpen = false,
+  onClose = () => {},
 }: SidebarProps) {
   // Role & Permissions details for display
   const getRolePermissionDetails = () => {
@@ -295,23 +300,52 @@ export function Sidebar({
   const permissionDetails = getRolePermissionDetails();
 
   return (
-    <aside className="w-64 bg-white border-r border-slate-200/80 flex flex-col justify-between h-screen sticky top-0 shrink-0 select-none">
-      {/* Top scrollable section */}
-      <div className="p-5 pb-3 overflow-y-auto max-h-[calc(100vh-80px)]">
-        {/* Brand Header */}
-        <div className="flex items-center gap-3 px-1 mb-5">
-          <div className="w-10 h-10 rounded-2xl bg-slate-900 text-white flex items-center justify-center shadow-md shadow-slate-900/10">
-            <Sparkles className="w-5 h-5 text-amber-300" />
+    <>
+      {/* Mobile Backdrop Overlay */}
+      {isOpen && (
+        <div
+          onClick={onClose}
+          className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-40 md:hidden transition-opacity"
+          aria-hidden="true"
+        />
+      )}
+
+      <aside
+        className={cn(
+          "w-72 md:w-64 bg-white border-r border-slate-200/80 flex flex-col justify-between h-screen sticky top-0 shrink-0 select-none z-50 transition-transform duration-300 ease-in-out",
+          // Mobile drawer positioning
+          "fixed inset-y-0 left-0 md:static",
+          isOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full md:translate-x-0"
+        )}
+      >
+        {/* Top scrollable section */}
+        <div className="p-5 pb-3 overflow-y-auto max-h-[calc(100vh-80px)]">
+          {/* Brand Header */}
+          <div className="flex items-center justify-between px-1 mb-5">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-slate-900 text-white flex items-center justify-center shadow-md shadow-slate-900/10">
+                <Sparkles className="w-5 h-5 text-amber-300" />
+              </div>
+              <div>
+                <span className="font-extrabold text-lg text-slate-900 tracking-tight block leading-tight">
+                  EduConnect
+                </span>
+                <span className="text-[11px] font-medium text-slate-400 block tracking-wider uppercase">
+                  Smart Tutoring Hub
+                </span>
+              </div>
+            </div>
+
+            {/* Close button on mobile */}
+            <button
+              type="button"
+              onClick={onClose}
+              className="md:hidden p-1.5 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+              aria-label="Đóng menu"
+            >
+              <X className="w-5 h-5" />
+            </button>
           </div>
-          <div>
-            <span className="font-extrabold text-lg text-slate-900 tracking-tight block leading-tight">
-              EduConnect
-            </span>
-            <span className="text-[11px] font-medium text-slate-400 block tracking-wider uppercase">
-              Smart Tutoring Hub
-            </span>
-          </div>
-        </div>
 
         {/* Active Role & Permissions Card (Replaces the role switcher selector) */}
         <div className="bg-[#F5F3EF] p-3 rounded-2xl border border-slate-200/80 mb-5 shadow-soft">
@@ -368,7 +402,10 @@ export function Sidebar({
               return (
                 <button
                   key={item.id}
-                  onClick={() => onTabChange(item.id)}
+                  onClick={() => {
+                    onTabChange(item.id);
+                    onClose();
+                  }}
                   className={cn(
                     'w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all group',
                     isActive
@@ -437,5 +474,6 @@ export function Sidebar({
         </div>
       </div>
     </aside>
-  );
+  </>
+);
 }
