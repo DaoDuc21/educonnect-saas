@@ -147,10 +147,10 @@ export function StudentTimetable({
       </div>
 
       {/* Personal Timetable Container */}
-      <div className="bg-white rounded-3xl border border-slate-200/80 shadow-soft p-6">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-slate-100">
+      <div className="bg-white rounded-3xl border border-slate-200/80 shadow-soft p-4 sm:p-6">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 sm:pb-6 border-b border-slate-100">
           <div>
-            <h2 className="text-xl font-bold text-slate-900 tracking-tight">
+            <h2 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
               Lịch Học Tuần Của Bạn
             </h2>
             <p className="text-xs text-slate-500 mt-0.5">
@@ -158,7 +158,7 @@ export function StudentTimetable({
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             {/* View Mode Toggle */}
             <div className="flex bg-[#F5F3EF] p-1 rounded-xl text-xs font-bold">
               <button
@@ -183,8 +183,8 @@ export function StudentTimetable({
               </button>
             </div>
 
-            {/* Day Filter Switcher */}
-            <div className="flex flex-wrap bg-[#F5F3EF] p-1 rounded-2xl text-xs font-semibold gap-1">
+            {/* Day Filter Switcher (overflow-x-auto for small phone screens) */}
+            <div className="flex items-center overflow-x-auto max-w-full bg-[#F5F3EF] p-1 rounded-2xl text-xs font-semibold gap-1">
               <button
                 type="button"
                 onClick={() => setDayFilter('all')}

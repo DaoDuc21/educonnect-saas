@@ -99,49 +99,47 @@ export function OnlineClassModal({
     showToast(handRaised ? 'Đã hạ tay xuống' : 'Đã giơ tay xin phát biểu!', 'info');
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 md:p-6 bg-black/80 backdrop-blur-md animate-in fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 md:p-6 bg-black/85 backdrop-blur-md animate-in fade-in">
       <div
-        className="bg-slate-950 text-white w-full max-w-5xl h-[88vh] rounded-3xl overflow-hidden shadow-2xl flex flex-col border border-slate-800"
+        className="bg-slate-950 text-white w-full max-w-5xl h-full sm:h-[90vh] sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col border border-slate-800"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Header Bar */}
-        <div className="px-5 py-3 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 px-2.5 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-bold">
+        <div className="px-3 sm:px-5 py-3 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 min-w-0">
+            <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-rose-500/10 border border-rose-500/20 text-rose-400 text-[11px] font-bold shrink-0">
               <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping" />
               <span>REC</span>
-              <span className="hidden sm:inline font-normal text-rose-300">• Ghi hình tự động Meet</span>
             </div>
 
-            <div>
-              <h3 className="font-bold text-sm tracking-wide text-white">{classTitle}</h3>
-              <p className="text-[11px] text-slate-400">
-                Chủ phòng: <strong className="text-amber-300">{tutorName}</strong> • Sĩ số: 4 thành viên
+            <div className="truncate">
+              <h3 className="font-bold text-xs sm:text-sm tracking-wide text-white truncate">{classTitle}</h3>
+              <p className="text-[10px] text-slate-400 truncate">
+                Chủ phòng: <strong className="text-amber-300">{tutorName}</strong>
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 shrink-0">
             {/* Direct Google Meet Link Button */}
             <a
               href={meetUrl}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => showToast('Đang kết nối vào phòng học Google Meet của lớp!', 'success')}
-              className="px-3.5 py-1.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-md flex items-center gap-1.5 transition-all group shrink-0 ring-2 ring-emerald-400/40"
+              className="px-2.5 sm:px-3.5 py-1.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] sm:text-xs font-bold shadow-md flex items-center gap-1 transition-all group shrink-0 ring-1 ring-emerald-400/40"
               title="Mở phòng Google Meet liên kết với lớp học"
             >
               <VideoIcon className="w-3.5 h-3.5 text-amber-300" />
-              <span>Vào Google Meet</span>
-              <ExternalLink className="w-3 h-3 text-white/80 group-hover:translate-x-0.5 transition-transform" />
+              <span className="hidden xs:inline sm:inline">Google Meet</span>
+              <ExternalLink className="w-3 h-3 text-white/80" />
             </a>
 
-            {/* View Mode Tabs */}
-            <div className="hidden md:flex items-center gap-1 bg-slate-800/80 p-1 rounded-xl text-xs font-semibold">
+            {/* View Mode Tabs on Tablet/Desktop */}
+            <div className="hidden sm:flex items-center gap-1 bg-slate-800/80 p-0.5 rounded-xl text-xs font-semibold">
               <button
                 onClick={() => setActiveView('whiteboard')}
-                className={`px-3 py-1 rounded-lg transition-all ${
+                className={`px-2.5 py-1 rounded-lg transition-all ${
                   activeView === 'whiteboard' ? 'bg-amber-400 text-slate-950 font-bold' : 'text-slate-300 hover:text-white'
                 }`}
               >
@@ -149,29 +147,57 @@ export function OnlineClassModal({
               </button>
               <button
                 onClick={() => setActiveView('slide')}
-                className={`px-3 py-1 rounded-lg transition-all ${
+                className={`px-2.5 py-1 rounded-lg transition-all ${
                   activeView === 'slide' ? 'bg-amber-400 text-slate-950 font-bold' : 'text-slate-300 hover:text-white'
                 }`}
               >
-                Slide bài giảng
+                Slide
               </button>
               <button
                 onClick={() => setActiveView('roster')}
-                className={`px-3 py-1 rounded-lg transition-all ${
+                className={`px-2.5 py-1 rounded-lg transition-all ${
                   activeView === 'roster' ? 'bg-amber-400 text-slate-950 font-bold' : 'text-slate-300 hover:text-white'
                 }`}
               >
-                Sĩ số (4)
+                Sĩ số
               </button>
             </div>
 
             <button
               onClick={onClose}
-              className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-slate-300 hover:text-white transition-colors ml-2"
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-slate-300 hover:text-white transition-colors ml-1"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
+        </div>
+
+        {/* Mobile View Selector Bar (visible on small mobile screens) */}
+        <div className="sm:hidden flex items-center justify-around bg-slate-900 border-b border-slate-800 p-1 text-xs font-semibold">
+          <button
+            onClick={() => setActiveView('whiteboard')}
+            className={`flex-1 py-1 text-center rounded-lg ${
+              activeView === 'whiteboard' ? 'bg-amber-400 text-slate-950 font-bold' : 'text-slate-400'
+            }`}
+          >
+            Bảng viết
+          </button>
+          <button
+            onClick={() => setActiveView('slide')}
+            className={`flex-1 py-1 text-center rounded-lg ${
+              activeView === 'slide' ? 'bg-amber-400 text-slate-950 font-bold' : 'text-slate-400'
+            }`}
+          >
+            Slide
+          </button>
+          <button
+            onClick={() => setActiveView('roster')}
+            className={`flex-1 py-1 text-center rounded-lg ${
+              activeView === 'roster' ? 'bg-amber-400 text-slate-950 font-bold' : 'text-slate-400'
+            }`}
+          >
+            Sĩ số
+          </button>
         </div>
 
         {/* Video Area + Chat Sidebar */}
@@ -377,9 +403,9 @@ export function OnlineClassModal({
             </div>
 
             {/* Floating Interactive Emoji Reaction Bar */}
-            <div className="pt-3 pb-1 flex items-center justify-between gap-2">
-              <div className="flex items-center gap-1.5 bg-slate-900/90 border border-slate-800 px-3 py-1.5 rounded-full">
-                <span className="text-[11px] font-bold text-slate-400 mr-1 hidden sm:inline">Cảm xúc:</span>
+            <div className="pt-2 pb-1 flex flex-wrap items-center justify-between gap-2">
+              <div className="flex items-center gap-1 bg-slate-900/90 border border-slate-800 px-2 sm:px-3 py-1 rounded-full overflow-x-auto max-w-[200px] sm:max-w-none">
+                <span className="text-[11px] font-bold text-slate-400 mr-1 hidden md:inline">Cảm xúc:</span>
                 {[
                   { emoji: '👍', label: 'Like' },
                   { emoji: '❤️', label: 'Thả tim' },
@@ -390,7 +416,7 @@ export function OnlineClassModal({
                   <button
                     key={item.emoji}
                     onClick={() => triggerReaction(item.emoji)}
-                    className="w-8 h-8 rounded-full hover:bg-slate-800 hover:scale-125 active:scale-95 transition-transform flex items-center justify-center text-lg"
+                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-full hover:bg-slate-800 hover:scale-125 active:scale-95 transition-transform flex items-center justify-center text-sm sm:text-base shrink-0"
                     title={item.label}
                   >
                     {item.emoji}
@@ -399,7 +425,7 @@ export function OnlineClassModal({
               </div>
 
               {/* In-Call Meeting Action Buttons */}
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 sm:gap-2">
                 <button
                   onClick={() => setMicOn(!micOn)}
                   className={`p-2.5 rounded-full transition-all ${

@@ -58,25 +58,25 @@ export function LoginPage({ onLoginSuccess, onBackToHome, credentials }: LoginPa
   return (
     <div className="min-h-screen bg-[#F5F3EF] flex flex-col justify-between p-4 sm:p-6 lg:p-8">
       {/* Top Bar with Back Link */}
-      <div className="max-w-6xl w-full mx-auto flex items-center justify-between pb-4">
+      <div className="max-w-6xl w-full mx-auto flex flex-wrap items-center justify-between gap-2 pb-4">
         <button
           onClick={onBackToHome}
-          className="flex items-center gap-2 text-xs font-bold text-slate-600 hover:text-slate-900 px-4 py-2 rounded-full bg-white border border-slate-200 shadow-soft transition-all"
+          className="flex items-center gap-2 text-xs font-bold text-slate-600 hover:text-slate-900 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white border border-slate-200 shadow-soft transition-all"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Quay lại Trang Chủ</span>
+          <span>Trang Chủ</span>
         </button>
 
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-          <span className="text-xs font-semibold text-slate-500">Cổng xác thực an toàn EduConnect</span>
+          <span className="text-[11px] sm:text-xs font-semibold text-slate-500">Bảo mật SSL 256-bit</span>
         </div>
       </div>
 
       {/* Main Login Card Container */}
-      <div className="max-w-4xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 my-auto">
+      <div className="max-w-4xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-8 my-auto">
         {/* Left Side: Form */}
-        <div className="lg:col-span-7 bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/80 shadow-soft flex flex-col justify-between">
+        <div className="lg:col-span-7 bg-white rounded-3xl p-5 sm:p-8 lg:p-10 border border-slate-200/80 shadow-soft flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-3 mb-6">
               <div className="w-11 h-11 rounded-2xl bg-slate-900 text-white flex items-center justify-center shadow-md shadow-slate-900/10">

@@ -234,10 +234,10 @@ export function MasterSchedule({
       )}
 
       {/* Top Navigation & 4-View Switcher Bar */}
-      <div className="p-6 border-b border-slate-100 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex flex-wrap items-center gap-4">
-          {/* 4-View Mode Switcher */}
-          <div className="flex items-center bg-[#F5F3EF] p-1 rounded-2xl border border-slate-200/80 shadow-xs">
+      <div className="p-4 sm:p-6 border-b border-slate-100 flex flex-wrap items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center gap-3 sm:gap-4 w-full md:w-auto">
+          {/* 4-View Mode Switcher (overflow-x-auto for mobile) */}
+          <div className="flex items-center overflow-x-auto max-w-full bg-[#F5F3EF] p-1 rounded-2xl border border-slate-200/80 shadow-xs">
             <button
               onClick={() => setViewMode('day')}
               className={cn(

@@ -110,13 +110,13 @@ export function StudentTable({ students, courses, attendanceRecords }: StudentTa
           </select>
 
           {/* Search Box */}
-          <div className="relative">
+          <div className="relative w-full sm:w-auto">
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Tìm theo tên học sinh, phụ huynh..."
-              className="w-48 sm:w-56 bg-[#F5F3EF] border border-slate-200/80 rounded-full pl-8 pr-3 py-1.5 text-xs text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-slate-400"
+              placeholder="Tìm học sinh, phụ huynh..."
+              className="w-full sm:w-56 bg-[#F5F3EF] border border-slate-200/80 rounded-full pl-8 pr-3 py-1.5 text-xs text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-slate-400"
             />
             <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
           </div>
