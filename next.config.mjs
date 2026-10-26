@@ -1,10 +1,11 @@
 /** @type {import('next').NextConfig} */
-const isProd = process.env.NODE_ENV === 'production';
+const isGitHubActions = process.env.GITHUB_ACTIONS === 'true';
 
 const nextConfig = {
-  output: 'export',
-  basePath: isProd ? '/educonnect-saas' : '',
-  assetPrefix: isProd ? '/educonnect-saas/' : '',
+  // Use static export for GitHub Actions / GitHub Pages; use standalone for Docker and self-hosted server
+  output: isGitHubActions ? 'export' : (process.env.NEXT_OUTPUT || 'standalone'),
+  basePath: isGitHubActions ? '/educonnect-saas' : (process.env.NEXT_PUBLIC_BASE_PATH || ''),
+  assetPrefix: isGitHubActions ? '/educonnect-saas/' : undefined,
   images: {
     unoptimized: true,
   },
