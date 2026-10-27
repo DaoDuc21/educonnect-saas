@@ -1,4 +1,49 @@
 services:
+  # -------------------------------------------------------------
+  # 1. PostgreSQL 16 - Relational Database (Fast & ACID Compliant)
+  # -------------------------------------------------------------
+  postgres:
+    image: postgres:16-alpine
+    container_name: educonnect-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: educonnect_db
+      POSTGRES_USER: educonnect
+      POSTGRES_PASSWORD: educonnect123
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U educonnect -d educonnect_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # -------------------------------------------------------------
+  # 2. Redis 7 - High Performance In-Memory Cache & Pub/Sub Sync
+  # -------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: educonnect-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  # -------------------------------------------------------------
+  # 3. Next.js App - EduConnect SaaS Web Server
+  # -------------------------------------------------------------
   educonnect:
     build:
       context: .
@@ -12,9 +57,27 @@ services:
       - NODE_ENV=production
       - PORT=3000
       - HOSTNAME=0.0.0.0
+      - DATABASE_URL=postgresql://educonnect:educonnect123@postgres:5432/educonnect_db
+      - REDIS_URL=redis://redis:6379
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=educonnect
+      - POSTGRES_PASSWORD=educonnect123
+      - POSTGRES_DB=educonnect_db
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     healthcheck:
       test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://127.0.0.1:3000/ || exit 1"]
       interval: 30s
       timeout: 5s
       retries: 3
       start_period: 15s
+
+volumes:
+  postgres_data:
+    name: educonnect_postgres_data
+  redis_data:
+    name: educonnect_redis_data
